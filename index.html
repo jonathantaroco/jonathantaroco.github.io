@@ -1,22 +1,28 @@
 <html>
+<script type='text/javascript' src='https://service.force.com/embeddedservice/menu/fab.min.js'></script>
 <script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+	var initESW = function(gslbBaseURL) {
+		// Required if you want labels in a language that’s different from your user’s context.
+		//embedded_svc.menu.settings.language = ''; //For example, enter 'en' or 'en-US'
 
-			embeddedservice_bootstrap.init(
-				'00DFg000005oTvJ',
-				'Web_Livechat_Deployment_Anja',
-				'https://richemont--livchatpoc.sandbox.my.site.com/ESWWebLivechatDeploymen1732551641964',
-				{
-					scrt2URL: 'https://richemont--livchatpoc.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
+		embedded_svc.menu.init(
+			'https://richemont--livchatpoc.sandbox.my.salesforce.com',
+			'https://d.la12s-core1.sfdc-yzvdd4.salesforceliveagent.com/chat',
+			gslbBaseURL,
+			'00DFg000005oTvJ',
+			'Web_Livechat_Channel_Menu'
+		);
 	};
-</script>
-<script type='text/javascript' src='https://richemont--livchatpoc.sandbox.my.site.com/ESWWebLivechatDeploymen1732551641964/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 
+	if (!window.embedded_svc || !window.embedded_svc.menu) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://richemont--livchatpoc.sandbox.my.salesforce.com/embeddedservice/menu/fab.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
 </html>
